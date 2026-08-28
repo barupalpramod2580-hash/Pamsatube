@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PamsaTube - Watch, discover and share videos.">
+  <meta name="theme-color" content="#ffffff">
+  <title>PamsaTube - Watch Videos</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="left-header">
+      <button class="menu-btn" id="menuBtn">☰</button>
+
+      <a href="#" class="logo" onclick="goHome()">
+        <span class="logo-icon">▶</span>
+        <span>Pamsa<span class="tube">Tube</span></span>
+      </a>
+    </div>
+
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search"
+        autocomplete="off"
+      >
+      <button id="searchBtn">🔍</button>
+    </div>
+
+    <div class="right-header">
+      <button class="header-btn" title="Create">＋</button>
+      <button class="header-btn" title="Notifications">🔔</button>
+      <button class="profile-btn" id="profileBtn">P</button>
+    </div>
+
+  </header>
+
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="side-section">
+
+      <button class="side-item active" onclick="goHome()">
+        <span>🏠</span>
+        <label>Home</label>
+      </button>
+
+      <button class="side-item" onclick="showMessage('Shorts')">
+        <span>🎬</span>
+        <label>Shorts</label>
+      </button>
+
+      <button class="side-item" onclick="showMessage('Subscriptions')">
+        <span>📺</span>
+        <label>Subscriptions</label>
+      </button>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="side-title">YOU</div>
+
+    <div class="side-section">
+
+      <button class="side-item" onclick="showMessage('History')">
+        <span>🕘</span>
+        <label>History</label>
+      </button>
+
+      <button class="side-item" onclick="showMessage('Playlists')">
+        <span>📋</span>
+        <label>Playlists</label>
+      </button>
+
+      <button class="side-item" onclick="showMessage('Your videos')">
+        <span>🎥</span>
+        <label>Your videos</label>
+      </button>
+
+      <button class="side-item" onclick="showMessage('Watch later')">
+        <span>⏰</span>
+        <label>Watch later</label>
+      </button>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="side-title">EXPLORE</div>
+
+    <div class="side-section">
+
+      <button class="side-item" onclick="filterCategory('Trending')">
+        <span>🔥</span>
+        <label>Trending</label>
+      </button>
+
+      <button class="side-item" onclick="filterCategory('Music')">
+        <span>🎵</span>
+        <label>Music</label>
+      </button>
+
+      <button class="side-item" onclick="filterCategory('Gaming')">
+        <span>🎮</span>
+        <label>Gaming</label>
+      </button>
+
+      <button class="side-item" onclick="filterCategory('Education')">
+        <span>📚</span>
+        <label>Education</label>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main">
+
+    <!-- CATEGORY BAR -->
+    <div class="categories">
+
+      <button class="category active" onclick="filterCategory('All')">
+        All
+      </button>
+
+      <button class="category" onclick="filterCategory('Trending')">
+        Trending
+      </button>
+
+      <button class="category" onclick="filterCategory('Music')">
+        Music
+      </button>
+
+      <button class="category" onclick="filterCategory('Gaming')">
+        Gaming
+      </button>
+
+      <button class="category" onclick="filterCategory('Education')">
+        Education
+      </button>
+
+      <button class="category" onclick="filterCategory('Technology')">
+        Technology
+      </button>
+
+      <button class="category" onclick="filterCategory('News')">
+        News
+      </button>
+
+      <button class="category" onclick="filterCategory('Sports')">
+        Sports
+      </button>
+
+    </div>
+
+
+    <!-- PAGE TITLE -->
+    <div class="page-heading">
+      <h1 id="pageTitle">Recommended videos</h1>
+    </div>
+
+
+    <!-- VIDEO GRID -->
+    <section class="video-grid" id="videoGrid"></section>
+
+  </main>
+
+
+  <!-- VIDEO PLAYER MODAL -->
+  <div class="player-overlay" id="playerOverlay">
+
+    <div class="player-container">
+
+      <button class="close-player" onclick="closePlayer()">✕</button>
+
+      <video
+        id="videoPlayer"
+        controls
+        playsinline
+      ></video>
+
+      <div class="player-info">
+
+        <h2 id="playerTitle">Video title</h2>
+
+        <div class="player-stats">
+          <span id="playerViews">0 views</span>
+          <span>•</span>
+          <span id="playerDate">Today</span>
+        </div>
+
+        <div class="player-actions">
+
+          <button id="likeBtn" onclick="likeVideo()">
+            👍 <span id="likeCount">0</span>
+          </button>
+
+          <button onclick="shareVideo()">
+            ↗ Share
+          </button>
+
+          <button onclick="saveVideo()">
+            🔖 Save
+          </button>
+
+        </div>
+
+        <div class="channel-box">
+
+          <div class="channel-avatar" id="channelAvatar">
+            P
+          </div>
+
+          <div>
+            <strong id="playerChannel">PamsaTube Creator</strong>
+            <p id="playerSubscribers">1.2K subscribers</p>
+          </div>
+
+          <button class="subscribe-btn" onclick="subscribeChannel()">
+            Subscribe
+          </button>
+
+        </div>
+
+
+        <!-- COMMENTS -->
+        <div class="comments">
+
+          <h3>Comments</h3>
+
+          <div class="comment-input">
+            <div class="small-avatar">P</div>
+
+            <input
+              type="text"
+              id="commentInput"
+              placeholder="Add a comment..."
+            >
+
+            <button onclick="addComment()">
+              Comment
+            </button>
+          </div>
+
+          <div id="commentsList"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOGIN MODAL -->
+  <div class="login-overlay" id="loginOverlay">
+
+    <div class="login-box">
+
+      <button class="login-close" onclick="closeLogin()">✕</button>
+
+      <div class="login-logo">
+        <span class="logo-icon">▶</span>
+        PamsaTube
+      </div>
+
+      <h2>Sign in to PamsaTube</h2>
+
+      <p>
+        Create your profile and enjoy your videos.
+      </p>
+
+      <input type="text" placeholder="Email or phone">
+
+      <input type="password" placeholder="Password">
+
+      <button class="login-btn" onclick="fakeLogin()">
+        Sign in
+      </button>
+
+      <p class="login-note">
+        Demo login — backend can be added later.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
