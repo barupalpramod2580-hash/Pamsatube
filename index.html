@@ -11,7 +11,133 @@ DOCTYPE html>
 
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- SHORTS UPLOAD -->
+<div id="shortUploadBox" style="
+  max-width:500px;
+  margin:20px auto;
+  padding:20px;
+  background:#fff;
+  border-radius:15px;
+  box-shadow:0 2px 10px #ddd;
+">
 
+  <h2>🎬 Upload Short</h2>
+
+  <input
+    type="file"
+    id="shortVideo"
+    accept="video/*"
+    style="width:100%;margin:10px 0;"
+  >
+
+  <input
+    type="text"
+    id="shortTitle"
+    placeholder="Short का title"
+    style="
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border:1px solid #ccc;
+      border-radius:8px;
+    "
+  >
+
+  <textarea
+    id="shortDescription"
+    placeholder="Description"
+    style="
+      width:100%;
+      height:80px;
+      padding:12px;
+      margin:10px 0;
+      border:1px solid #ccc;
+      border-radius:8px;
+    "
+  ></textarea>
+
+  <button
+    onclick="uploadShort()"
+    style="
+      width:100%;
+      padding:13px;
+      background:#ff0000;
+      color:white;
+      border:0;
+      border-radius:25px;
+      font-size:17px;
+      font-weight:bold;
+    "
+  >
+    ⬆️ Upload Short
+  </button>
+
+  <p id="shortStatus"></p>
+
+</div>
+
+<script>
+async function uploadShort() {
+
+  const video =
+    document.getElementById("shortVideo").files[0];
+
+  const title =
+    document.getElementById("shortTitle").value.trim();
+
+  const description =
+    document.getElementById("shortDescription").value.trim();
+
+  const status =
+    document.getElementById("shortStatus");
+
+  if (!video) {
+    status.innerText = "❌ पहले video select करो";
+    return;
+  }
+
+  if (!title) {
+    status.innerText = "❌ Title लिखो";
+    return;
+  }
+
+  const formData = new FormData();
+
+  formData.append("video", video);
+  formData.append("title", title);
+  formData.append("description", description);
+
+  status.innerText = "⏳ Short upload हो रहा है...";
+
+  try {
+
+    const response = await fetch(
+      "/api/shorts/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || "Upload failed"
+      );
+    }
+
+    status.innerText =
+      "✅ Short successfully upload हो गया!";
+
+  } catch (error) {
+
+    status.innerText =
+      "❌ Error: " + error.message;
+
+  }
+}
+</script>
 <body>
 
   <!-- HEADER -->
